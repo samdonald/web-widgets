@@ -2,5 +2,4 @@ clean: true
 init: true
 path: ./.github/action/
 issue: 1
-install:
-  - "@actions/github"
+install: []
