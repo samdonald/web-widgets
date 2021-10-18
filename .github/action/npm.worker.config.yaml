@@ -1,5 +1,5 @@
 clean: true
-init: false
+init: true
 path: ./.github/action/
 issue: 1
 uninstall: []
