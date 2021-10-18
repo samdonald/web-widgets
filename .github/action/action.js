@@ -26,10 +26,16 @@ const fs = require("fs");
 // function getScript(file) {}
 
 
-
+// function loadTemplate(name) {}
 
 (async function(){
   try {
+    // 1. load templates.
+    // 2. populate submitted widget content into widget template.
+    // 3. save new widget to docs directory
+    // 4. populate item template with widget data
+    // 5. append item template to widget list on home page.
+    // 5. update user to contributors list on README.md, if not already listed.
   } catch(error) {
     core.setFailed(error);
   }
