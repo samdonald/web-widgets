@@ -3,3 +3,4 @@ init: false
 path: ./.github/action/
 issue: 1
 uninstall: []
+install: "@octokit"
