@@ -1,0 +1,20 @@
+name: NPM
+
+on:
+  push:
+    paths:
+      - .github/action/npm.worker.config.yaml
+      
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: NPM Worker
+        uses: mudlabs/npm-worker@v1.3.0
+        with:
+          config: .github/action/
+      - name: Add and Commit
+        uses: EndBug/add-and-commit@v5.1.0
