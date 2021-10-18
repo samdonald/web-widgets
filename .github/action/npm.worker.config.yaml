@@ -2,5 +2,5 @@ clean: true
 init: true
 path: ./.github/action/
 issue: 1
-uninstall: []
-install: "@octokit"
+install:
+  - "@actions/github"
