@@ -1,5 +1,0 @@
-name: Widget
-description: Publishes a new widget page to the live site, and updates the home page widgets list.
-runs:
-  using: node12
-  main: action.js
