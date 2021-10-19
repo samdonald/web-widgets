@@ -3,7 +3,7 @@ const path = require("path");
 const yaml = require("js-yaml");
 const liquid = require("liquid");
 const cheerio = require("cheerio");
-const core = require("@actions/core");
+const core = require("@actions");
 const github = require("@octokit");
 
 const fs_options = { encoding: "utf-8" };
