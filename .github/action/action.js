@@ -3,12 +3,12 @@ const path = require("path");
 const yaml = require("js-yaml");
 const liquid = require("liquid");
 const cheerio = require("cheerio");
-const core = require("@actions/core");
-const github = require("@octokit/core");
+const { core, github } = require("@actions");
+const octo = require("@octokit/core");
 
 const fs_options = { encoding: "utf-8" };
 
-const octokit = new github.Octokit();
+const octokit = new octo.Octokit();
 
 // A user had sumbitted a widget PR and it has been accepted.
 
