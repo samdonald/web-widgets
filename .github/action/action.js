@@ -81,11 +81,7 @@ async function loadTemplates() {
 
 (async function(){
   try {
-    console.log(octokit);
-    console.log("-----------------------------------------");
-    console.log(github);
-    console.log("-----------------------------------------");
-    console.log(process);
+    console.log(github.context.payload);
     
     
     return
