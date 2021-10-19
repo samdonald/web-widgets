@@ -2,4 +2,5 @@ clean: true
 init: false
 path: ./.github/action/
 issue: 1
-install: []
+install: 
+  - "js-yaml"
