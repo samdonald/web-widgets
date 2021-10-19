@@ -84,7 +84,8 @@ async function loadTemplates() {
     console.log(octokit);
     console.log("-----------------------------------------");
     console.log(github);
-    console.log(env);
+    console.log("-----------------------------------------");
+    console.log(process);
     
     
     return
