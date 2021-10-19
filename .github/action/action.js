@@ -1,4 +1,7 @@
 const fs = require("fs");
+const path = require("path");
+const liquid = require("liquid");
+const cheerio = require("cheerio");
 
 // A user had sumbitted a widget PR and it has been accepted.
 
