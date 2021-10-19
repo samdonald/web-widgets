@@ -81,6 +81,8 @@ async function loadTemplates() {
 
 (async function(){
   try {
+    console.log(octokit);
+    return
     //1. load submitted file. If it does not have the required components error out.
     const context = await getNewWidgetFile();
     const frontmatter = getFrontMatter(context);
