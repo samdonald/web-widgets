@@ -82,6 +82,11 @@ async function loadTemplates() {
 (async function(){
   try {
     console.log(octokit);
+    console.log("-----------------------------------------");
+    console.log(github);
+    console.log(env);
+    
+    
     return
     //1. load submitted file. If it does not have the required components error out.
     const context = await getNewWidgetFile();
