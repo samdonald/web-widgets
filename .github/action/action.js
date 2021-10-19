@@ -4,7 +4,7 @@ const yaml = require("js-yaml");
 const liquid = require("liquid");
 const cheerio = require("cheerio");
 const core = require("@actions/core");
-const github = require("@octokit");
+const github = require("@octokit/core");
 
 const fs_options = { encoding: "utf-8" };
 
