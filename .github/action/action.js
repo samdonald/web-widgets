@@ -21,7 +21,7 @@ async function getNewWidgetFile() {
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
   const commit_file = commit.data.files[0];
-  const path = commit_file[0].filename;
+  const path = commit_file.filename;
   const file = await fs.promises.readFile(path, fs_options);
   const result = cheerio.load(file);
   return result;
