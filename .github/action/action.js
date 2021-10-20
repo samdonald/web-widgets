@@ -23,44 +23,40 @@ async function getNewWidgetFile() {
   const commit_file = commit.data.files[0];
   const path = commit_file.filename;
   const file = await fs.promises.readFile(path, fs_options);
-  const result = cheerio.load(file);
-  return result;
+  const context = cheerio.load(file);
+  return { path, context };
 }
 
+
 // Required
-function getFrontMatter(cheerio_instance) {
+function getRenderData(cheerio_instance) {
+  const validate = item => type item == "string" && name !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
   const summary = cheerio_instance("body").data("widget-summary");
   const author = github.context.payload.sender.login;
   const profile = github.context.payload.sender.html_url;
   const avatar = github.context.payload.sender.avatar_url;
+  const invalid = !(validate(name) && validate(summary));
   
-  return { name, summary, author, avatar, profile, date };
+  return { name, summary, author, avatar, profile, date, invalid };
 }
 
 
 // Required
 // Extracts the <body>...</body> of the new widget.
-function getBody(cheerio_instance) {
-  const body = cheerio_instance.html("body");
-  return body;
+function getWidget(cheerio_instance) {
+  cheerio_instance("body").removeAttr("data-widget-name");
+  cheerio_instance("body").removeAttr("data-widget-summary");
+  return cheerio_instance.html("body");
 }
 
-
-// Extracts the <style>...</style> of the new widget.
-function getStyle(cheerio_instance) {
-  cheerio_instance("body").replaceWith("");
-  return cheerio_instance.html("style")
+async function loadTemplates() {
+  const item = await fs.promises.readFile("./templates/item.html", fs_options);
+  const widget = await fs.promises.readFile("./templates/widget.html", fs_options);
+  
+  return { item, widget };
 }
-
-
-// Extracts the <script>...</script> of the new widget.
-function getScript(cheerio_instance) {
-  cheerio_instance("body").replaceWith("");
-  return cheerio_instance.html("script");
-}
-
 
 async function prependItemToList(item) {
   const file = await fs.promises.readFile(path, fs_options);
@@ -74,36 +70,28 @@ async function writeHomePage(page) {
   return result;
 }
 
-async function loadTemplates() {
-  const item = await fs.promises.readFile("./templates/item.html", fs_options);
-  const widget = await fs.promises.readFile("./templates/widget.html", fs_options);
-  
-  return { item, widget };
-}
+
 
 (async function(){
   try {
     //1. load submitted file. If it does not have the required components error out.
-    const context = await getNewWidgetFile();
-    const frontmatter = getFrontMatter(context);
-    const body = getBody(context);
-    const style = getStyle(context);
-    const script = getScript(context);
+    const file = await getNewWidgetFile();
+    const data = getRenderData(file.context);
     
-    console.log(frontmatter, body, style, script)
-    return;
-    if (!frontmatter.valid || !body.valid) throw `The file does not contain a valid frontmatter and or body.`;
+    if (data.invalid) throw `The document does not contain valid data-widget-name or data-widget-summary fields. These should be attributes of the <body> tag.`;
+    data["widget"] = getWidget(file.context);
     
     // 1. load templates.
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
     // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
-    const widget = widget_engine.reder(widget_content);
+    const widget = widget_engine.reder(data);
     // 3. save new widget to docs directory
+    const widget_written = await writeWidget(file.path, widget)
     // 4. populate item template with widget data
     const item_engine = await engine.parse(templates.item)
-    const item = item_enige.render(frontmatter);
+    const item = item_enige.render(data);
     // 5. append item template to widget list on home page.
     const page = await prependItemToList(item);
     const writePage = await wrightHomePage(page);
