@@ -9,7 +9,7 @@ const octo = require("@octokit/core");
 
 const fs_options = { encoding: "utf-8" };
 
-const octokit = new octo.Octokit();
+const octokit = github.getOctokit(core.getInput("token"));
 
 // A user had sumbitted a widget PR and it has been accepted.
 
@@ -83,7 +83,13 @@ async function loadTemplates() {
     console.log("-------------------------------");
     console.log(github.context.payload);
     
-    
+    const commits = github.context.payload.commits;
+    const commit = await octokit.request({
+          method: "GET",
+          url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
+        });
+    const commit_files = commit.data.files;
+    console.log(commit_files);
     return
     //1. load submitted file. If it does not have the required components error out.
     const token = core.getInput("token");
