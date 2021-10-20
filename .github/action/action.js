@@ -27,18 +27,15 @@ async function getNewWidgetFile() {
 //   name: The name of the widget
 //   summary: Brief description of the widget
 // }
-function getFrontMatter(file) {
-  const front_matter = { name: null, summary: null };
-  const yamlChunk = file.substring(0, file.indexOf("---"));
-  const doc = yaml.load(yamlChunck);
+function getFrontMatter(cheerio_instance) {
+  const date = new Date().toDateString();
+  const name = cheerio_instance("body").data("widget-name");
+  const summary = cheerio_instance("body").data("widget-summary");
+  const author = github.context.payload.sender.login;
+  const profile = github.context.payload.sender.html_url;
+  const avatar = github.context.payload.sender.avatar_url;
   
-  return { 
-    name: doc.name, 
-    summary: doc.summary,
-    author: octokit.author,
-    profile: octokit.profile,
-    date: octokit.data
-  };
+  return { name, summary, author, avatar, profile, date };
 }
 
 
