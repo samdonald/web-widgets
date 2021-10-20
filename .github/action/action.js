@@ -86,6 +86,7 @@ async function loadTemplates() {
     
     return
     //1. load submitted file. If it does not have the required components error out.
+    const token = core.getInput("token");
     const context = await getNewWidgetFile();
     const frontmatter = getFrontMatter(context);
     const body = getBody(context);
