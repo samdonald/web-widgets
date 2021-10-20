@@ -3,3 +3,8 @@ description: Publishes a new widget page to the live site, and updates the home 
 runs:
   using: node12
   main: action.js
+inputs:
+  token:
+    description: PAT for authorisation
+    required: false
+    default: ${{ github.token }}
