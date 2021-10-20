@@ -28,12 +28,6 @@ async function getNewWidgetFile() {
 }
 
 // Required
-// Extract front matter
-// Expected output:
-// {
-//   name: The name of the widget
-//   summary: Brief description of the widget
-// }
 function getFrontMatter(cheerio_instance) {
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
@@ -55,13 +49,15 @@ function getBody(cheerio_instance) {
 
 // Extracts the <style>...</style> of the new widget.
 function getStyle(cheerio_instance) {
-  const style = cheerio_instance.html("style");
+  cheerio_instance("body").replaceWith("");
+  return cheerio_instance.html("style")
 }
 
 
 // Extracts the <script>...</script> of the new widget.
 function getScript(cheerio_instance) {
-  const script = cheerio_instance.html("script");
+  cheerio_instance("body").replaceWith("");
+  return cheerio_instance.html("script");
 }
 
 
@@ -89,12 +85,12 @@ async function loadTemplates() {
     //1. load submitted file. If it does not have the required components error out.
     const context = await getNewWidgetFile();
     const frontmatter = getFrontMatter(context);
-    console.log(frontmatter);
-    return;
     const body = getBody(context);
     const style = getStyle(context);
     const script = getScript(context);
     
+    console.log(frontmatter, body, style, script)
+    return;
     if (!frontmatter.valid || !body.valid) throw `The file does not contain a valid frontmatter and or body.`;
     
     // 1. load templates.
