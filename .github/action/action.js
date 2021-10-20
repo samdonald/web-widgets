@@ -89,12 +89,12 @@ async function loadTemplates() {
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
     const commit_files = commit.data.files;
-    console.log(commit_files[0].raw_url);
-    const raw = await octokit.request({
+    console.log(commit_files[0].contents_url);
+    const response = await octokit.request({
       methos: "GET",
-      url: commit_files[0].raw_url
+      url: commit_files[0].contents_url
     });
-    console.log(raw)
+    console.log(response)
     return
     //1. load submitted file. If it does not have the required components error out.
     const token = core.getInput("token");
