@@ -44,6 +44,7 @@ function getFrontMatter(cheerio_instance) {
 // Extracts the <body>...</body> of the new widget.
 function getBody(cheerio_instance) {
   const body = cheerio_instance.html("body");
+  return body;
 }
 
 
