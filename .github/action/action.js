@@ -79,6 +79,8 @@ async function loadTemplates() {
 
 (async function(){
   try {
+    console.log(github.context);
+    console.log("-------------------------------");
     console.log(github.context.payload);
     
     
