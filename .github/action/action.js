@@ -54,8 +54,9 @@ function getWidget(cheerio_instance) {
 async function loadTemplates() {
   const item = await fs.promises.readFile("./.github/action/templates/item.html", fs_options);
   const widget = await fs.promises.readFile("./.github/action/templates/widget.html", fs_options);
+  const contributor = await fs.profiles.readFile("./.github/action/templates/contributor", fs_options);
   
-  return { item, widget };
+  return { item, widget, contributor };
 }
 
 async function prependItemToList(item) {
@@ -73,6 +74,33 @@ async function writeHomePage(page) {
 async function writeWidget(path, widget) {
   const result = await fs.promises.writeFile(`./docs/${path}`, widget, fs_options);
   return result;
+}
+
+async function addContributor(template, engine, data) {
+  let changed = false;
+  const readme = await fs.promises.readFile("./README.md", fs_options);
+  const cheerio_instance = cheerio.load(readme);
+  const contributors = cheerio_instance("#contributors");
+  if (!contributors(`#${data.author}`)) {
+    const _engine = await engine.parse(template);
+    const td = _engine.render(data);
+    const last_tr = contributors.last("tr");
+    last_tr.children("td").length > 6
+      ? contributors.append(`<tr>${td}</tr>`)
+      : last_tr.append(td);
+    changed = true;
+  }
+  
+  return { changed, contents: cheerio_instance.html() };
+}
+
+async function writeReadme(file) {
+  if (readme.changed) {
+    const result = await fs.promises.writeFile("./README.md", file, fs_options);
+    return result;
+  } else {
+    return;
+  }
 }
 
 
@@ -100,8 +128,7 @@ async function writeWidget(path, widget) {
     const page = await prependItemToList(item);
     const writePage = await writeHomePage(page);
     // 5. update user to contributors list on README.md, if not already listed.
-    return;
-    const readme = await manageReadme();
+    const readme = await addContributor(templates.contributor, engine, data);
     const writeReadme = await writeReadme(readme);
     return "Success";
   } catch(error) {
