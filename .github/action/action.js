@@ -84,7 +84,7 @@ async function addContributor(template, engine, data) {
   if (contributors.has(`#${data.author}`).length === 0) {
     const _engine = await engine.parse(template);
     const td = await _engine.render(data);
-    const last_tr = contributors.last("tr");
+    const last_tr = contributors.children("tr").last();
     last_tr.children("td").length > 6
       ? contributors.append(`<tr>${td}</tr>`)
       : last_tr.append(td);
