@@ -12,12 +12,12 @@ const fs_options = { encoding: "utf-8" };
 const octokit = github.getOctokit(core.getInput("token"));
 
 // A user had sumbitted a widget PR and it has been accepted.
-const async hasUniqueName = () => {
-  const file = await fs.promises.readFile("./docs/index.html", fs_options);
-  const cheerio_instance = cheerio.load(file);
-  const widgets = cheerio_instance("#widgets");
-  return widgets.has(``).length === 1;
-}
+// const async hasUniqueName = () => {
+//   const file = await fs.promises.readFile("./docs/index.html", fs_options);
+//   const cheerio_instance = cheerio.load(file);
+//   const widgets = cheerio_instance("#widgets");
+//   return widgets.has(``).length === 1;
+// }
 
 // Request widget file from commit and return its contents as a cheerio instance.
 async function getNewWidgetFile() {
