@@ -33,6 +33,8 @@ Create your widget html file and add it to the `widgets` directory. Please refer
 
 ## Widget Contributors
 
-<table id="contributors">
-  <tr></tr>
+<table>
+  <tbody id="contributors">
+    <tr></tr>
+  </tbody>
 </table>
