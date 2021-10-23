@@ -98,7 +98,7 @@ async function writeWidget(path, widget) {
     const item = item_engine.render(data);
     // 5. append item template to widget list on home page.
     const page = await prependItemToList(item);
-    const writePage = await wrightHomePage(page);
+    const writePage = await writeHomePage(page);
     // 5. update user to contributors list on README.md, if not already listed.
     return;
     const readme = await manageReadme();
