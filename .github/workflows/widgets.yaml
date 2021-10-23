@@ -23,7 +23,7 @@ jobs:
       - name: Add Widget to Site
         uses: ./.github/action
         with:
-          file: steps.diff.outputs
+          file: ${{ steps.diff.outputs }}
 #       - name: Update Readme
 #         uses: ./.github/action
 # #         if: steps.diffy.outputs.modified !== true
