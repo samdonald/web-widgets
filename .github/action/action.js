@@ -83,6 +83,8 @@ async function writeHomePage(page) {
     
     // 1. load templates.
     const templates = await loadTemplates();
+    console.log(templates.item)
+    return
     const engine = new liquid.Engine();
     // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
