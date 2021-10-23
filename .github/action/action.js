@@ -83,7 +83,7 @@ async function addContributor(template, engine, data) {
   const contributors = cheerio_instance("#contributors");
   if (contributors.has(`#${data.author}`).length === 0) {
     const _engine = await engine.parse(template);
-    const td = _engine.render(data);
+    const td = await _engine.render(data);
     const last_tr = contributors.last("tr");
     last_tr.children("td").length > 6
       ? contributors.append(`<tr>${td}</tr>`)
@@ -118,12 +118,12 @@ async function writeReadme(file) {
     const engine = new liquid.Engine();
     // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
-    const widget = widget_engine.render(data);
+    const widget = await widget_engine.render(data);
     // 3. save new widget to docs directory
     const widget_written = await writeWidget(file.path, widget)
     // 4. populate item template with widget data
     const item_engine = await engine.parse(templates.item)
-    const item = item_engine.render(data);
+    const item = await item_engine.render(data);
     // 5. append item template to widget list on home page.
     const page = await prependItemToList(item);
     const writePage = await writeHomePage(page);
