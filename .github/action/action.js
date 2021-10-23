@@ -112,7 +112,12 @@ async function writeReadme(file) {
 
 (async function(){
   try {
-    console.log(core.getInput("file"));
+    console.log(core.getInput("deleted"));
+    console.log(core.getInput("added"));
+    console.log(core.getInput("modified"));
+    console.log(core.getInput("renamed"));
+    console.log(core.getInput("name"));
+    console.log(core.getInput("previous"));
     console.log(github.context.payload);
     return
     // if a widget was deleted
