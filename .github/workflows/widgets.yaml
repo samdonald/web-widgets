@@ -18,7 +18,7 @@ jobs:
 #         uses: mudlabs/diffy@v1.0.0
 #         id: diffy
       - name: Simple Diff
-        uses: mudlabs/sumple-diff@v1.2.0
+        uses: mudlabs/simple-diff@v1.2.0
         id: diff
       - name: Add Widget to Site
         uses: ./.github/action
