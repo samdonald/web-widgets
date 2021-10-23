@@ -95,7 +95,7 @@ async function addContributor(template, engine, data) {
 }
 
 async function writeReadme(file) {
-  if (readme.changed) {
+  if (file.changed) {
     const result = await fs.promises.writeFile("./README.md", file, fs_options);
     return result;
   } else {
