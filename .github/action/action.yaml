@@ -8,5 +8,15 @@ inputs:
     description: PAT for authorisation
     required: false
     default: ${{ github.token }}
-  file:
-    description: An object with the Simple Diff output for the commit diff tree
+  deleted:
+    description: File status output from Simple Diff action.
+  added:
+    description: File status output from Simple Diff action.
+  modified:
+    description: File status output from Simple Diff action.
+  renamed:
+    description: File status output from Simple Diff action.
+  name:
+    description: File status output from Simple Diff action.
+  previous:
+    description: File status output from Simple Diff action.
