@@ -30,7 +30,7 @@ async function getNewWidgetFile() {
 
 // Required
 function getRenderData(cheerio_instance) {
-  const validate = item => type item == "string" && name !== "";
+  const validate = item => typeof item == "string" && name !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
   const summary = cheerio_instance("body").data("widget-summary");
