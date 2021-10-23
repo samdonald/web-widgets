@@ -52,8 +52,8 @@ function getWidget(cheerio_instance) {
 }
 
 async function loadTemplates() {
-  const item = await fs.promises.readFile("./templates/item.html", fs_options);
-  const widget = await fs.promises.readFile("./templates/widget.html", fs_options);
+  const item = await fs.promises.readFile("./.github/action/templates/item.html", fs_options);
+  const widget = await fs.promises.readFile("./.github/action/templates/widget.html", fs_options);
   
   return { item, widget };
 }
