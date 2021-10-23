@@ -90,7 +90,7 @@ async function writeWidget(path, widget) {
     const engine = new liquid.Engine();
     // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
-    const widget = widget_engine.reder(data);
+    const widget = widget_engine.render(data);
     // 3. save new widget to docs directory
     const widget_written = await writeWidget(file.path, widget)
     // 4. populate item template with widget data
