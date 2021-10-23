@@ -1,7 +1,7 @@
-<html><head></head><body data-widget-name="Foo Bar" data-widget-summary="This widget example shows you how to structure a widget.">https://mudlabs.github.io/web-widgets
-
 # web-widgets
-Small web widgets can be used to demonstrate programming to new and experienced developers. Everyone is welcome to contribute a widget.
+Web widgets can be used to demonstrate programming to new and experienced developers or as a library of small components, which can be readily added to any website/app and customised for purpose. Everyone is welcome to contribute a widget.
+
+- [:link: &nbsp; Web Widgets](https://mudlabs.github.io/web-widgets)
 
 
 ## Contribute
