@@ -95,7 +95,7 @@ async function writeWidget(path, widget) {
     const widget_written = await writeWidget(file.path, widget)
     // 4. populate item template with widget data
     const item_engine = await engine.parse(templates.item)
-    const item = item_enige.render(data);
+    const item = item_engine.render(data);
     // 5. append item template to widget list on home page.
     const page = await prependItemToList(item);
     const writePage = await wrightHomePage(page);
