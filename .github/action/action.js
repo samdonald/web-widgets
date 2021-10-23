@@ -112,6 +112,8 @@ async function writeReadme(file) {
 
 (async function(){
   try {
+    console.log(github.context.payload)
+    return
     // if a widget was deleted
       // delete it from the list.
       // delete it from /docs
