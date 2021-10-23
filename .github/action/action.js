@@ -59,17 +59,21 @@ async function loadTemplates() {
 }
 
 async function prependItemToList(item) {
-  const file = await fs.promises.readFile(path, fs_options);
+  const file = await fs.promises.readFile("./docs/index.html", fs_options);
   const context = cheerio.load(file);
   context(".widgets").prepend(item);
   return context.html();
 }
 
 async function writeHomePage(page) {
-  const result = await fs.promises.writeFile(path, page, fs_options);
+  const result = await fs.promises.writeFile("./docs/index.html", page, fs_options);
   return result;
 }
 
+async function writeWidget(path, widget) {
+  const result = await fs.promises.writeFile(`./docs/${path}`, widget, fs_options);
+  return result;
+}
 
 
 (async function(){
@@ -83,8 +87,6 @@ async function writeHomePage(page) {
     
     // 1. load templates.
     const templates = await loadTemplates();
-    console.log(templates.item)
-    return
     const engine = new liquid.Engine();
     // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
@@ -98,6 +100,7 @@ async function writeHomePage(page) {
     const page = await prependItemToList(item);
     const writePage = await wrightHomePage(page);
     // 5. update user to contributors list on README.md, if not already listed.
+    return;
     const readme = await manageReadme();
     const writeReadme = await writeReadme(readme);
     return "Success";
