@@ -12,6 +12,12 @@ const fs_options = { encoding: "utf-8" };
 const octokit = github.getOctokit(core.getInput("token"));
 
 // A user had sumbitted a widget PR and it has been accepted.
+const async hasUniqueName = () => {
+  const file = await fs.promises.readFile("./docs/index.html", fs_options);
+  const cheerio_instance = cheerio.load(file);
+  const widgets = cheerio_instance("#widgets");
+  return widgets.has(``).length === 1;
+}
 
 // Request widget file from commit and return its contents as a cheerio instance.
 async function getNewWidgetFile() {
@@ -21,7 +27,7 @@ async function getNewWidgetFile() {
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
   const commit_file = commit.data.files[0];
-  const path = commit_file.filename;
+  const path = commit_file.filename.substring(commit_file.indexOf("/")+1);
   const file = await fs.promises.readFile(path, fs_options);
   const context = cheerio.load(file);
   return { path, context };
@@ -30,7 +36,7 @@ async function getNewWidgetFile() {
 
 // Required
 function getRenderData(cheerio_instance) {
-  const validate = item => typeof item == "string" && name !== "";
+  const validate = item => typeof item == "string" && item !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
   const summary = cheerio_instance("body").data("widget-summary");
@@ -106,29 +112,31 @@ async function writeReadme(file) {
 
 (async function(){
   try {
-    //1. load submitted file. If it does not have the required components error out.
+    // if a widget was deleted
+      // delete it from the list.
+      // delete it from /docs
+      // if the author has no other widget remove them from contributors
+    // if a widget was created
+      // add it to the list
+      // add it to /docs
+      // if the author has no other widgets add them to contributors
+    // if a widget was changed 
+      // update list
+      // update in /docs
     const file = await getNewWidgetFile();
     const data = getRenderData(file.context);
-    
     if (data.invalid) throw `The document does not contain valid data-widget-name or data-widget-summary fields. These should be attributes of the <body> tag.`;
     data["widget"] = getWidget(file.context);
     data["path"] = file.path;
-    
-    // 1. load templates.
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
-    // 2. populate submitted widget content into widget template.
     const widget_engine = await engine.parse(templates.widget);
     const widget = await widget_engine.render(data);
-    // 3. save new widget to docs directory
     const widget_written = await writeWidget(file.path, widget)
-    // 4. populate item template with widget data
     const item_engine = await engine.parse(templates.item)
     const item = await item_engine.render(data);
-    // 5. append item template to widget list on home page.
     const page = await prependItemToList(item);
     const writePage = await writeHomePage(page);
-    // 5. update user to contributors list on README.md, if not already listed.
     const readme = await addContributor(templates.contributor, engine, data);
     const write_readme = await writeReadme(readme);
     return "Success";
