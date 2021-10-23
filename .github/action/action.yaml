@@ -8,3 +8,5 @@ inputs:
     description: PAT for authorisation
     required: false
     default: ${{ github.token }}
+  file:
+    description: An object with the Simple Diff output for the commit diff tree
