@@ -17,11 +17,16 @@ jobs:
 #       - name: Diffy
 #         uses: mudlabs/diffy@v1.0.0
 #         id: diffy
+      - name: Simple Diff
+        uses: mudlabs/sumple-diff@v1.2.0
+        id: diff
       - name: Add Widget to Site
         uses: ./.github/action
+        with:
+          file: steps.diff.outputs
 #       - name: Update Readme
 #         uses: ./.github/action
 # #         if: steps.diffy.outputs.modified !== true
-      - name: Add and Commit
-        uses: EndBug/add-and-commit@v5.1.0
-        if: success()
+#       - name: Add and Commit
+#         uses: EndBug/add-and-commit@v5.1.0
+#         if: success()
