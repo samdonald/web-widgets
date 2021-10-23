@@ -29,3 +29,10 @@ Create your widget html file and add it to the `widgets` directory. Please refer
   }, 2000);
 </script>
 ```
+
+
+## Widget Contributors
+
+<table>
+  <tr></tr>
+</table>
