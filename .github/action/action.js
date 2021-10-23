@@ -112,6 +112,7 @@ async function writeReadme(file) {
     
     if (data.invalid) throw `The document does not contain valid data-widget-name or data-widget-summary fields. These should be attributes of the <body> tag.`;
     data["widget"] = getWidget(file.context);
+    data["path"] = `./docs/${file.path}`;
     
     // 1. load templates.
     const templates = await loadTemplates();
