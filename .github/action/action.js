@@ -129,7 +129,7 @@ async function writeReadme(file) {
     const writePage = await writeHomePage(page);
     // 5. update user to contributors list on README.md, if not already listed.
     const readme = await addContributor(templates.contributor, engine, data);
-    const writeReadme = await writeReadme(readme);
+    const write_readme = await writeReadme(readme);
     return "Success";
   } catch(error) {
     core.setFailed(error);
