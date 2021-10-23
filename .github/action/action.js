@@ -81,7 +81,7 @@ async function addContributor(template, engine, data) {
   const readme = await fs.promises.readFile("./README.md", fs_options);
   const cheerio_instance = cheerio.load(readme);
   const contributors = cheerio_instance("#contributors");
-  if (contributors.has(`#${data.author}`).length === 1) {
+  if (contributors.has(`#${data.author}`).length === 0) {
     const _engine = await engine.parse(template);
     const td = _engine.render(data);
     const last_tr = contributors.last("tr");
