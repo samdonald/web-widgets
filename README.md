@@ -36,6 +36,12 @@ Create your widget html file and add it to the `widgets` directory. Please refer
 <table>
   <tbody id="contributors">
     <tr></tr>
-  </tbody>
+  <td>
+  <a href="https://github.com/mudlabs">
+    <img src="https://avatars.githubusercontent.com/u/32623552?v=4" width="100px;" alt="avatar"><br>
+    <sub><b>mudlabs</b></sub>
+  </a>
+</td>
+</tbody>
 </table>
 </body></html>
