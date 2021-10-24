@@ -46,13 +46,14 @@ async function getRenderData(author, cheerio_instance) {
   const validate = item => typeof item == "string" && item !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
+  const id = widgetId(author, name);
   const summary = cheerio_instance("body").data("widget-summary");
 //   const author = github.context.payload.sender.login;
   const profile = github.context.payload.sender.html_url;
   const avatar = github.context.payload.sender.avatar_url;
   const invalid = !(validate(name) && validate(summary));
   
-  return { name, summary, author, avatar, profile, date, invalid };
+  return { id, name, summary, author, avatar, profile, date, invalid };
 }
 
 
@@ -119,20 +120,19 @@ async function addContributor(template, engine, data) {
 }
 
 // Runs if a commit has deleted a widget.
-async function removedWidget(author, name, file) {
+async function removedWidget(data, file) {
   const list = await readFile("docs/index.html");
   const instance = cheerify(list);
   const widgets = instance("#widgets");
-  const id = widgetID(author, name);
-  const item = widgets.children(`#${id}`);
+  const item = widgets.children(`#${data.id}`);
   if (item.length === 1) {
     instance(item).remove();
     const rm = await fs.promises.unlink(`docs/${file}`);
-    core.setOutput("author", author);
+    core.setOutput("author", data.author);
     return `SUCCESS: ${file} widget removed.`;
   } else {
     throw Error(`
-      Could not remove widget (${data.name}). Expected child count 1, found ${child.length}.
+      Could not remove widget (${data.name}). Expected child count 1, found ${item.length}.
         -  ID: ${id}
     `);
   }
@@ -155,7 +155,7 @@ async function removedWidget(author, name, file) {
     
     
     if (removed) {
-      const done = await removedWidget(data.author, data.name, file.name);
+      const done = await removedWidget(data, file.name);
       const result = await removeContributor()
       return result;
     }
