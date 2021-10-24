@@ -28,7 +28,7 @@ async function getWidgetFile(file_name) {
         });
   const commit_file = commit.data.files[0];
   const f = await octokit.request("GET /repos/{owner}/{repo}/commits", {owner:"mudlabs",repo: "web-widgets", path: file_name, sha: "dev"});
-  console.log(f);
+  f.data.forEach(i => console.log(i.author, i.comitter));
   const path = file_name.replace(/^widgets\//, "");
   const file = await fs.promises.readFile(file_name, fs_options);
   const context = cheerio.load(file);
