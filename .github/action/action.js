@@ -42,12 +42,12 @@ async function getWidgetFile(path) {
 
 
 // Required
-async function getRenderData(cheerio_instance) {
+async function getRenderData(author, cheerio_instance) {
   const validate = item => typeof item == "string" && item !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
   const summary = cheerio_instance("body").data("widget-summary");
-  const author = github.context.payload.sender.login;
+//   const author = github.context.payload.sender.login;
   const profile = github.context.payload.sender.html_url;
   const avatar = github.context.payload.sender.avatar_url;
   const invalid = !(validate(name) && validate(summary));
@@ -93,7 +93,7 @@ async function removeContributor() {
   if (!hasWidgets) {
     const readme = await readFile("./README.me");
     const instance = cheerify(readme);
-    const instance(`td[id=${author}`).remove();
+    instance(`td[id=${author}`).remove();
     const result = await writeFile("./README.md", instance.html());
     return result;
   }
@@ -149,13 +149,13 @@ async function removedWidget(author, name, file) {
     
     const file = await getWidgetFile(name);
     const original = await originalAuthor(name);
-    const data = getRenderData(file.context);
+    const data = getRenderData(original.author, file.context);
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
     
     
     if (removed) {
-      const done = await removedWidget(original.author, data.name, file.name);
+      const done = await removedWidget(data.author, data.name, file.name);
       const result = await removeContributor()
       return result;
     }
