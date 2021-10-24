@@ -27,7 +27,7 @@ async function getWidgetFile(file_name) {
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
   const commit_file = commit.data.files[0];
-  const f = await octokit.request("GET /repos/{owner}/{repo}/commits", {owner:"mudlabs",repo: "web-widgets", path: file_name});
+  const f = await octokit.request("GET /repos/{owner}/{repo}/commits", {owner:"mudlabs",repo: "web-widgets", path: file_name, sha: "dev"});
   console.log(f);
   const path = file_name.replace(/^widgets\//, "");
   const file = await fs.promises.readFile(file_name, fs_options);
