@@ -124,7 +124,7 @@ async function removedWidget(author, name, file) {
   const instance = cheerify(list);
   const widgets = instance("#widgets");
   const id = widgetID(author, name);
-  const item widgets.children(`#${id}`);
+  const item = widgets.children(`#${id}`);
   if (item.length === 1) {
     instance(item).remove();
     const rm = await fs.promises.unlink(`docs/${file}`);
