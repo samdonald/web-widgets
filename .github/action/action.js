@@ -20,14 +20,15 @@ const octokit = github.getOctokit(core.getInput("token"));
 // }
 
 // Request widget file from commit and return its contents as a cheerio instance.
-async function getNewWidgetFile() {
+async function getWidgetFile(file_name) {
   const commits = github.context.payload.commits;
   const commit = await octokit.request({
           method: "GET",
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
   const commit_file = commit.data.files[0];
-  const path = commit_file.filename.substring(commit_file.indexOf("/")+1);
+  console.log(commit_file);
+  const path = file_name.replace(/^widgets\//, "");
   const file = await fs.promises.readFile(path, fs_options);
   const context = cheerio.load(file);
   return { path, context };
@@ -112,18 +113,29 @@ async function writeReadme(file) {
 
 (async function(){
   try {
-    console.log(core.getInput("deleted"));
-    console.log(core.getInput("added"));
-    console.log(core.getInput("modified"));
-    console.log(core.getInput("renamed"));
-    console.log(core.getInput("name"));
-    console.log(core.getInput("previous"));
-    console.log(github.context.payload);
+    const added = core.getInput("added");
+    const removed = core.getInput("deleted");
+    const modified = core.getInput("modified");
+    const renamed = core.getInput("renamed");
+    const name = core.getInput("name");
+    const previous = core.getInput("previous");
+    
+    const file = await getWidgetFile(name);
+    const data = getRenderData(file.context);
     return
-    // if a widget was deleted
-      // delete it from the list.
-      // delete it from /docs
-      // if the author has no other widget remove them from contributors
+    
+    if (removed) {
+      // was it removed by its author?
+      // delete from list
+      // delete from /docs
+      // setOutput widget_author
+    } else if (added) {
+      // add to list
+      // add to /docs
+      // setOutput widget_author
+    }
+    return
+    
     // if a widget was created
       // add it to the list
       // add it to /docs
@@ -131,8 +143,7 @@ async function writeReadme(file) {
     // if a widget was changed 
       // update list
       // update in /docs
-    const file = await getNewWidgetFile();
-    const data = getRenderData(file.context);
+    
     if (data.invalid) throw `The document does not contain valid data-widget-name or data-widget-summary fields. These should be attributes of the <body> tag.`;
     data["widget"] = getWidget(file.context);
     data["path"] = file.path;
