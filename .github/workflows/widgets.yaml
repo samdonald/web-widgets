@@ -23,8 +23,8 @@ jobs:
       - name: Add Widget to Site
         uses: ./.github/action
         with:
-          deleted: steps.diff.outputs.removed
-          added: steps.diff.outputs.added
+          deleted: steps.diff.outputs.removed == true
+          added: steps.diff.outputs.added == true
           modified: steps.diff.outputs.modified
           renamed: steps.diff.outputs.renamed
           name: steps.diff.outputs.name
