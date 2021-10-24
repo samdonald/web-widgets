@@ -14,9 +14,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-#       - name: Diffy
-#         uses: mudlabs/diffy@v1.0.0
-#         id: diffy
       - name: Simple Diff
         uses: mudlabs/simple-diff@v1.2.0
         id: diff
@@ -29,9 +26,6 @@ jobs:
           renamed: ${{steps.diff.outputs.renamed}}
           name: ${{steps.diff.outputs.name}}
           previous: ${{steps.diff.outputs.previous}}
-#       - name: Update Readme
-#         uses: ./.github/action
-# #         if: success() && (steps.diffy.outputs.removed == true || steps.diffy.outputs.added == true)
-#       - name: Add and Commit
-#         uses: EndBug/add-and-commit@v5.1.0
-#         if: success()
+      - name: Add and Commit
+        uses: EndBug/add-and-commit@v5.1.0
+        if: success()
