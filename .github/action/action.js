@@ -133,7 +133,7 @@ async function removedWidget(data, file) {
   } else {
     throw Error(`
       Could not remove widget (${data.name}). Expected child count 1, found ${item.length}.
-        -  ID: ${id}
+        -  ID: ${data.id}
     `);
   }
 }
