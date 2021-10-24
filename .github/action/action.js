@@ -8,6 +8,8 @@ const github = require("@actions/github");
 const octo = require("@octokit/core");
 
 const fs_options = { encoding: "utf-8" };
+const owner = "mudlabs";
+const repo = "web-widgets";
 
 const octokit = github.getOctokit(core.getInput("token"));
 
@@ -114,6 +116,10 @@ async function writeReadme(file) {
 
 (async function(){
   try {
+    console.log(github.context.payload);
+    console.log("--------------------------");
+    console.log(github.context.payload.commits);
+    return;
     const added = core.getInput("added");
     const removed = core.getInput("deleted");
     const modified = core.getInput("modified");
