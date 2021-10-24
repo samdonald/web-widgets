@@ -27,11 +27,7 @@ async function getWidgetFile(file_name) {
           url: `https://api.github.com/repos/mudlabs/web-widgets/commits/${commits[0].id}`
         });
   const commit_file = commit.data.files[0];
-  const blob = await octokit.request({
-    method: "GET",
-    url: commit_file.blob_url
-  });
-  console.log(blob);
+  console.log(commits, github.context.payload);
   const path = file_name.replace(/^widgets\//, "");
   const file = await fs.promises.readFile(file_name, fs_options);
   const context = cheerio.load(file);
