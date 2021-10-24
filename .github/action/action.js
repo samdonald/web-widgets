@@ -154,13 +154,6 @@ async function removedWidget(data, file) {
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
     
-    console.log("removed", removed, typeof removed);
-    console.log("added", added, typeof added);
-    console.log("modified", modified, typeof modified);
-    console.log("renamed", renamed, typeof renamed);
-    console.log("name", name, typeof name);
-    console.log("previous", previous, typeof previous);
-    
     if (removed) {
       const done = await removedWidget(data, file.name);
       const result = await removeContributor()
@@ -173,20 +166,14 @@ async function removedWidget(data, file) {
     data["path"] = file.name;
     
     const widget_engine = await engine.parse(templates.widget);
-    const item_engine = await engine.parse(templates.item)
-    
     const widget = await widget_engine.render(data);
+    
+    const item_engine = await engine.parse(templates.item)
     const item = await item_engine.render(data);
     
     const list = await updateList(item)
     const page = await writeWidget(file.name, widget);
-    // if a widget was created
-      // add it to the list
-      // add it to /docs
-      // if the author has no other widgets add them to contributors
-    // if a widget was changed 
-      // update list
-      // update in /docs
+    
     if (added) await addContributor(templates.contributor, engine, data);
     return "Success";
   } catch(error) {
