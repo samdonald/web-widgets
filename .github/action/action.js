@@ -17,6 +17,7 @@ const readFile = async (path, options = fs_options) => await fs.promises.readFil
 const writeFile = async (path, contents, options = fs_options) => await fs.promises.writeFile(path, contents, options);
 const cheerify = file => cheerio.load(file);
 const widgetId = (author, name) => `${author}--${name.replace(/\s+/g, "").toLowerCase()}`;
+const toBoolean = (boolean_string) => boolean_string.toLowerCase() === "false" ? false : true;
 
 // Finds the original author of a file created on the repo.
 async function originalAuthor(path) {
@@ -140,10 +141,10 @@ async function removedWidget(data, file) {
 
 (async function(){
   try {
-    const added = core.getInput("added");
-    const removed = core.getInput("deleted");
-    const modified = core.getInput("modified");
-    const renamed = core.getInput("renamed");
+    const added = toBoolean(core.getInput("added"));
+    const removed = toBoolean(core.getInput("deleted"));
+    const modified = toBoolean(core.getInput("modified"));
+    const renamed = toBoolean(core.getInput("renamed"));
     const name = core.getInput("name");
     const previous = core.getInput("previous");
     
