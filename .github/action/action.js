@@ -153,6 +153,12 @@ async function removedWidget(data, file) {
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
     
+    console.log("removed", removed, typeof removed);
+    console.log("added", added, typeof added);
+    console.log("modified", modified, typeof modified);
+    console.log("renamed", renamed, typeof renamed);
+    console.log("name", name, typeof name);
+    console.log("previous", previous, typeof previous);
     
     if (removed) {
       const done = await removedWidget(data, file.name);
