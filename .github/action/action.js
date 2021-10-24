@@ -165,7 +165,6 @@ async function removedWidget(author, name, file) {
     data["widget"] = getWidget(file.context);
     data["path"] = file.name;
     
-    const engine = new liquid.Engine();
     const widget_engine = await engine.parse(templates.widget);
     const item_engine = await engine.parse(templates.item)
     
