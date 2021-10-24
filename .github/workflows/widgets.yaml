@@ -24,11 +24,11 @@ jobs:
         uses: ./.github/action
         with:
           deleted: ${{steps.diff.outputs.removed}}
-          added: steps.diff.outputs.added == true
-          modified: steps.diff.outputs.modified
-          renamed: steps.diff.outputs.renamed
-          name: steps.diff.outputs.name
-          previous: steps.diff.outputs.previous
+          added: ${{steps.diff.outputs.added}}
+          modified: ${{steps.diff.outputs.modified}}
+          renamed: ${{steps.diff.outputs.renamed}}
+          name: ${{steps.diff.outputs.name}}
+          previous: ${{steps.diff.outputs.previous}}
 #       - name: Update Readme
 #         uses: ./.github/action
 # #         if: steps.diffy.outputs.modified !== true
