@@ -18,19 +18,14 @@ Create your widget `html` file and add it to the `widgets` directory. Please ref
 
 <table>
   <tbody id="contributors">
-    <tr><td id="mudlabs" align="center">
-  <a href="https://github.com/mudlabs">
-    <img src="https://avatars.githubusercontent.com/u/32623552?v=4" width="100px;" alt="avatar"><br>
-    <sub><b>mudlabs</b></sub>
-  </a>
-</td>
-<td id="" align="center">
-  <a href="">
-    <img src="" width="100px;" alt="avatar"><br>
-    <sub><b></b></sub>
-  </a>
-</td>
-</tr>
+    <tr>
+      <td id="mudlabs" align="center">
+        <a href="https://github.com/mudlabs">
+          <img src="https://avatars.githubusercontent.com/u/32623552?v=4" width="100px;" alt="avatar"><br>
+          <sub><b>mudlabs</b></sub>
+        </a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
