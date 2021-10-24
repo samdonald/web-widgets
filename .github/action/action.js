@@ -120,7 +120,7 @@ async function addContributor(template, engine, data) {
 
 // Runs if a commit has deleted a widget.
 async function removedWidget(author, name, file) {
-  const list = await readFile("widgets/index.html");
+  const list = await readFile("docs/index.html");
   const instance = cheerify(list);
   const widgets = instance("#widgets");
   const id = widgetID(author, name);
