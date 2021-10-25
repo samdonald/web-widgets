@@ -2,7 +2,7 @@ name: PR Opened
 description: Checks all basic requirements are in place
 runs:
   using: node12
-  main: action.js
+  main: pr.js
 inputs:
   token:
     description: PAT for authorisation
