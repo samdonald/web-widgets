@@ -90,8 +90,7 @@ async function writeWidget(path, widget) {
 }
 
 
-async function removeContributor() {
-  const instance = cheerify(list);
+async function removeContributor(instance) {
   const hasWidgets = instance(`li[class=widget][data-author=${author}`).length === 0 ? false : true;
   if (!hasWidgets) {
     const readme = await readFile("./README.me");
@@ -131,7 +130,7 @@ async function removedWidget(data, file) {
     instance(item).remove();
     const rm = await fs.promises.unlink(`docs/${file}`);
     core.setOutput("author", data.author);
-    return `SUCCESS: ${file} widget removed.`;
+    return instance;
   } else {
     throw Error(`
       Could not remove widget (${data.name}). Expected child count 1, found ${item.length}.
@@ -157,7 +156,7 @@ async function removedWidget(data, file) {
     
     if (removed) {
       const done = await removedWidget(data, file.name);
-      const result = await removeContributor()
+      const result = await removeContributor(done)
       return result;
     }
     
