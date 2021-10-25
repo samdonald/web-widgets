@@ -96,7 +96,7 @@ async function removeContributor(instance, author) {
   if (!hasWidgets) {
     const readme = await readFile("./README.md");
     const instance = cheerify(readme);
-    instance(`td[id=${author}`).remove();
+    instance(`td[id=${author}]`).remove();
     const result = await writeFile("./README.md", instance.html());
     return result;
   }
