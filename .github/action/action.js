@@ -125,7 +125,7 @@ async function addContributor(template, engine, data) {
 async function removedWidget(data, file) {
   const list = await readFile("docs/index.html");
   const instance = cheerify(list);
-  const widgets = instance("#widgets");
+  const widgets = instance(".widgets");
   const item = widgets.children(`#${data.id}`);
   if (item.length === 1) {
     instance(item).remove();
