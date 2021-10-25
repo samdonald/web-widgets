@@ -16,6 +16,8 @@ jobs:
       - name: Simple Diff
         uses: mudlabs/simple-diff@v1.2.0
         id: diff
+        with:
+          path: widgets/*.html
       - name: Process
         run: exit 1
         if: steps.diff.outputs.removed == true
