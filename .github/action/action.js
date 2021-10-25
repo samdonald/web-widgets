@@ -36,6 +36,7 @@ async function getWidgetFile(path) {
         });
   const commit_file = commit.data.files[0];
   const file = await octokit.request({ method: "GET", url: commit_file.raw_url });
+  console.log(file, commit_file.filename)
   const name = commit_file.filename.replace(/^widgets\//, "");
   const context = cheerio.load(file);
   return { name, context };
