@@ -130,7 +130,7 @@ async function removedWidget(data, file) {
   if (item.length === 1) {
     instance(item).remove();
     const rm = await fs.promises.unlink(`docs/${file}`);
-    core.setOutput("author", data.author);
+    const done = await writeFile("docs/index.html", instance.html())
     return instance;
   } else {
     throw Error(`
