@@ -31,6 +31,12 @@ Create your widget `html` file and add it to the `widgets` directory. Please ref
     <sub><b></b></sub>
   </a>
 </td>
+<td id="" align="center">
+  <a href="">
+    <img src="" width="100px;" alt="avatar"><br>
+    <sub><b></b></sub>
+  </a>
+</td>
 </tr>
   </tbody>
 </table>
