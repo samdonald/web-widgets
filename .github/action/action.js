@@ -166,6 +166,7 @@ async function removedWidget(data, file) {
     data["path"] = file.name;
     
     console.log(data);
+    console.log(templates.widget)
     const widget_engine = await engine.parse(templates.widget);
     const widget = await widget_engine.render(data);
     console.log(widget)
