@@ -90,7 +90,7 @@ async function writeWidget(path, widget) {
 }
 
 
-async function removeContributor(instance) {
+async function removeContributor(instance, author) {
   const hasWidgets = instance(`li[class=widget][data-author=${author}`).length === 0 ? false : true;
   if (!hasWidgets) {
     const readme = await readFile("./README.me");
@@ -156,7 +156,7 @@ async function removedWidget(data, file) {
     
     if (removed) {
       const done = await removedWidget(data, file.name);
-      const result = await removeContributor(done)
+      const result = await removeContributor(done, data.author)
       return result;
     }
     
