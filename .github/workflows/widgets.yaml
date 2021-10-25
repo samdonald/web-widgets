@@ -2,8 +2,8 @@ name: Widgets
 
 on:
   push:
-#     branches:
-#       - master
+    branches:
+      - master
     paths:
       - 'widgets/*.html'
 
