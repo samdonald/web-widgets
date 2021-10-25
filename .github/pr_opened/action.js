@@ -1,6 +1,6 @@
-const cheerio = require("cheerio");
-const core = require("@actions/core");
-const github = require("@actions/github");
+const cheerio = require("../action/cheerio");
+const core = require("../action/@actions/core");
+const github = require("../action/@actions/github");
 
 const octokit = github.getOctokit(core.getInput("token"));
 
