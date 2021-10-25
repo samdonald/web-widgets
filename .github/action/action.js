@@ -23,9 +23,10 @@ const toBoolean = (boolean_string) => boolean_string.toLowerCase() === "false" ?
 async function originalAuthor(path) {
   const commits = await octokit.request("GET /repos/{owner}/{repo}/commits", { owner, repo, path, sha: "dev"});
   const original = commits.data.pop();
-  console.log(original)
   const author = original.author.login;
-  return { author };
+  const avatar = original.author.avatar_url;
+  const profile = original.author.html_url;
+  return { author, avatar, profile };
 }
 
 // Request widget file from commit and return its contents as a cheerio instance.
@@ -37,7 +38,6 @@ async function getWidgetFile(path) {
         });
   const commit_file = commit.data.files[0];
   const file = await octokit.request({ method: "GET", url: commit_file.raw_url });
-  console.log(file.data, commit_file.filename)
   const name = commit_file.filename.replace(/^widgets\//, "");
   const context = cheerio.load(file.data);
   return { name, context };
@@ -45,15 +45,15 @@ async function getWidgetFile(path) {
 
 
 // Required
-function getRenderData(author, cheerio_instance) {
+function getRenderData(original, cheerio_instance) {
   const validate = item => typeof item == "string" && item !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
   const id = widgetId(author, name);
   const summary = cheerio_instance("body").data("widget-summary");
-//   const author = github.context.payload.sender.login;
-  const profile = github.context.payload.sender.html_url;
-  const avatar = github.context.payload.sender.avatar_url;
+  const author = original.author;
+  const profile = original.profile;
+  const avatar = original.avatar;
   const invalid = !(validate(name) && validate(summary));
   
   return { id, name, summary, author, avatar, profile, date, invalid };
@@ -151,7 +151,7 @@ async function removedWidget(data, file) {
     
     const file = await getWidgetFile(name);
     const original = await originalAuthor(name);
-    const data = getRenderData(original.author, file.context);
+    const data = getRenderData(original, file.context);
     const templates = await loadTemplates();
     const engine = new liquid.Engine();
     
