@@ -78,8 +78,8 @@ async function updateList(item) {
   const path = "./docs/index.html";
   const file = await readFile(path);
   const instance = cheerify(file);
-  const page = instance(".widgets").prepend(item);
-  const write = await writeFile(path, page);
+  instance(".widgets").prepend(item);
+  const write = await writeFile(path, instance.html());
   return write;
 }
 
