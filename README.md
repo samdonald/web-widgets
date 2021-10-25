@@ -25,12 +25,7 @@ Create your widget `html` file and add it to the `widgets` directory. Please ref
           <sub><b>mudlabs</b></sub>
         </a>
       </td>
-<td id="samdonald" align="center">
-  <a href="https://github.com/samdonald">
-    <img src="https://avatars.githubusercontent.com/u/70357344?v=4" width="100px;" alt="avatar"><br>
-    <sub><b>samdonald</b></sub>
-  </a>
-</td>
+
 </tr>
   </tbody>
 </table>
