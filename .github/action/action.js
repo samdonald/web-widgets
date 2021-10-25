@@ -49,7 +49,7 @@ function getRenderData(original, cheerio_instance) {
   const validate = item => typeof item == "string" && item !== "";
   const date = new Date().toDateString();
   const name = cheerio_instance("body").data("widget-name");
-  const id = widgetId(author, name);
+  const id = widgetId(original.author, name);
   const summary = cheerio_instance("body").data("widget-summary");
   const author = original.author;
   const profile = original.profile;
