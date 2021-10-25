@@ -23,6 +23,7 @@ const toBoolean = (boolean_string) => boolean_string.toLowerCase() === "false" ?
 async function originalAuthor(path) {
   const commits = await octokit.request("GET /repos/{owner}/{repo}/commits", { owner, repo, path, sha: "dev"});
   const original = commits.data.pop();
+  console.log(original)
   const author = original.author.login;
   return { author };
 }
