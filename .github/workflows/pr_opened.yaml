@@ -3,8 +3,8 @@ name: PR Opened
 on:
   pull_request:
     types: [opened]
-#     branches:
-#       - master
+    branches:
+      - dev
 
 jobs:
   update:
@@ -17,7 +17,7 @@ jobs:
         uses: mudlabs/simple-diff@v1.2.0
         id: diff
         with:
-          path: widgets/*.html
+          path: ./widgets/*.html
       - name: Process
         run: exit 1
         if: steps.diff.outputs.removed == true
