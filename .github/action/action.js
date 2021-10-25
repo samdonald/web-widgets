@@ -36,7 +36,7 @@ async function getWidgetFile(path) {
         });
   const commit_file = commit.data.files[0];
   const name = path.replace(/^widgets\//, "");
-  const file = await fs.promises.readFile(path, fs_options);
+  const file = await readFile(path);
   const context = cheerio.load(file);
   return { name, context };
 }
@@ -165,14 +165,16 @@ async function removedWidget(data, file) {
     data["widget"] = getWidget(file.context);
     data["path"] = file.name;
     
+    console.log(data);
     const widget_engine = await engine.parse(templates.widget);
     const widget = await widget_engine.render(data);
+    console.log(widget)
+    const page = await writeWidget(file.name, widget);
     
     const item_engine = await engine.parse(templates.item)
     const item = await item_engine.render(data);
-    
+    console.log(item);
     const list = await updateList(item)
-    const page = await writeWidget(file.name, widget);
     
     if (added) await addContributor(templates.contributor, engine, data);
     return "Success";
